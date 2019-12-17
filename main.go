@@ -9,16 +9,14 @@ import (
 	"ApiForTwoDb/driver"
 	"ApiForTwoDb/utils"
 
-	"github.com/gorilla/mux"
 	_ "github.com/jinzhu/gorm/dialects/mssql"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/subosito/gotenv"
+	"src/github.com/gorilla/mux"
 )
 
 var MySqlDb *driver.MySqlDb
 var MsSqlDb *driver.MsSqlDb
-
-var err error
 
 func init() {
 
@@ -70,6 +68,7 @@ func main() {
 	router.HandleFunc("/v1/mysql/getsome", controller.MysqlGetSome(MySqlDb)).Methods("GET")    //mysql取得部分值
 	router.HandleFunc("/v1/mysql/update", controller.MysqlUpdate(MySqlDb)).Methods("PUT")      //mysql更新值
 	router.HandleFunc("/v1/mysql/delete", controller.MysqlDelete(MySqlDb)).Methods("DELETE")   //mysql刪除值
+
 	//mssql
 	router.HandleFunc("/v1/mssql/signup", controller.MssqlSignup(MsSqlDb)).Methods("POST")     //mssql註冊
 	router.HandleFunc("/v1/mssql/login", controller.MssqlLogin(MsSqlDb)).Methods("POST")       //mssql登入
@@ -78,6 +77,10 @@ func main() {
 	router.HandleFunc("/v1/mssql/getsome", controller.MssqlGetSome(MsSqlDb)).Methods("GET")    //mssql取得部分值
 	router.HandleFunc("/v1/mssql/update", controller.MssqlUpdate(MsSqlDb)).Methods("PUT")      //mssql更新值
 	router.HandleFunc("/v1/mssql/delete", controller.MssqlDelete(MsSqlDb)).Methods("DELETE")   //mysql刪除值
+
+	//join table
+	router.HandleFunc("/v1/join/getall", controller.JoinGetAll(MySqlDb, MsSqlDb)).Methods("GET") //mssql取得所有值
+	//router.HandleFunc("/v1/join/getsome", controller.JoinGetSome(MySqlDb, MsSqlDb)).Methods("GET") //mssql取得部分值
 
 	//func (r *Router) Use(mc MiddlewareChain)
 	//attach JWT auth middleware
@@ -94,4 +97,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 }

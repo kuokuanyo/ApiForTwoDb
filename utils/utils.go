@@ -1,9 +1,11 @@
 package utils
 
 import (
+	"ApiForTwoDb/driver"
 	models "ApiForTwoDb/model"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -39,10 +41,11 @@ func MysqlJwtAuthentication(next http.Handler) http.Handler {
 			"/v1/mssql/signup", "/v1/mssql/login",
 			"/v1/mssql/addvalue", "/v1/mssql/getall",
 			"/v1/mssql/getsome", "/v1/mssql/update",
-			"/v1/mssql/delete"}
+			"/v1/mssql/delete", `/v1/join/getall`,
+			"/v1/join/getsome"}
 		//current request path
 		requestPath := r.URL.Path
-
+		
 		//不須驗證的路徑，直接執行
 		for _, path := range paths {
 			if path == requestPath {
@@ -121,7 +124,8 @@ func MssqlJwtAuthentication(next http.Handler) http.Handler {
 			"/v1/mssql/signup", "/v1/mssql/login",
 			"/v1/mysql/addvalue", "/v1/mysql/getall",
 			"/v1/mysql/getsome", "/v1/mysql/update",
-			"/v1/mysql/delete"}
+			"/v1/mysql/delete", `/v1/join/getall`,
+			"/v1/join/getsome"}
 		//current request path
 		requestPath := r.URL.Path
 
@@ -236,4 +240,63 @@ func MssqlGenerateToken(user models.User) (string, error) {
 		return "", err
 	}
 	return tokenString, nil
+}
+
+//建立關聯表
+func CreateJoinTable(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb, peoples []models.People, events []models.Event) {
+	if !MySqlDb.HasTable(&models.JoinTable{}) {
+		MySqlDb.CreateTable(&models.JoinTable{})
+	}
+
+	peoples, err := MySqlDb.MysqlQueryAllData(peoples)
+	if err != nil {
+		log.Fatal(err)
+	}
+	events, err = MsSqlDb.MssqlQueryAllData(events)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, people := range peoples {
+		for _, event := range events {
+			var jointable models.JoinTable
+			//關聯表欄位
+			if people.Key1 == event.Key1 && people.Key2 == event.Key2 && people.Key3 == event.Key3 {
+				jointable.Key1 = people.Key1
+				jointable.Key2 = people.Key2
+				jointable.Key3 = people.Key3
+				jointable.Number = people.Number
+				jointable.Gender = people.Gender
+				jointable.Birth = people.Birth
+				jointable.Injury_degree = people.Injury_degree
+				jointable.Injury_position = people.Injury_position
+				jointable.Protection = people.Protection
+				jointable.Phone = people.Phone
+				jointable.Person = people.Person
+				jointable.Car = people.Car
+				jointable.Action_status = people.Action_status
+				jointable.Qualification = people.Qualification
+				jointable.License = people.License
+				jointable.Drinking = people.Drinking
+				jointable.Hit = people.Hit
+				jointable.City = event.City
+				jointable.Position = event.Position
+				jointable.Lane = event.Lane
+				jointable.Death = event.Death
+				jointable.Injured = event.Injured
+				jointable.Death_exceed = event.Death_exceed
+				jointable.Weather = event.Weather
+				jointable.Light = event.Light
+				jointable.Time_year = event.Time_year
+				jointable.Time_month = event.Time_month
+				jointable.Accident_chinese = event.Accident_chinese
+				jointable.Anecdote_chinese = event.Anecdote_chinese
+				//插入數值
+				err := MySqlDb.Create(&jointable).Error
+				if err != nil {
+					fmt.Println(err)
+				}
+			}
+		}
+	}
 }
