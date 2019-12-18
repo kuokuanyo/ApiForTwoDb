@@ -20,3 +20,18 @@ type People struct {
 	Drinking        int    `gorm:"column:drinking" json:"drinking"`
 	Hit             int    `gorm:"column:hit" json:"hit"`
 }
+
+type mysqlgetsome struct {
+	Key1 string
+	Key2 string
+	Key3 string
+}
+
+type mysqlupdate struct {
+	Key1  string
+	Birth int
+}
+
+type mysqldelete struct {
+	Key1 string
+}

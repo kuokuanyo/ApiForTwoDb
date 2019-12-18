@@ -17,7 +17,10 @@ func (u UserRepository) MssqlQueryAllData(MsSqlDb *driver.MsSqlDb, events []mode
 }
 
 func (u UserRepository) MssqlQuerySomeData(MsSqlDb *driver.MsSqlDb, events []models.Event, event models.Event) ([]models.Event, error) {
-	events, err := MsSqlDb.MssqlQuerySomeData(events, map[string]interface{}{"key1": event.Key1})
+	events, err := MsSqlDb.MssqlQuerySomeData(events,
+		map[string]interface{}{"key1": event.Key1,
+			"key2": event.Key2,
+			"key3": event.Key3})
 	return events, err
 }
 

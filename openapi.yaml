@@ -1,0 +1,918 @@
+openapi: 3.0.0
+info:
+  description: Define an API
+  license: {}
+  title: Restful API(connect two databases)
+  version: 1.0.0
+  contact:
+    name: API Support
+    url: http://www.example.com/support
+    email: a167829435@gmail.com
+    
+paths:
+  "/mysql/signup":
+    post:
+      description: 註冊
+      requestBody:
+        $ref: "#/components/requestBodies/models.user"
+      responses:
+        "200":
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.user"
+              example: 
+                  email:
+                    "test@example.com"
+                  password:
+                    ""
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "E-mail or Password error!"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "E-mail already taken!"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
+      summary: create a new account
+      tags:
+        - Mysql_User
+  "/mysql/login":
+    post:
+      description: 登入
+      requestBody:
+        $ref: "#/components/requestBodies/models.user"
+      responses:
+        "200":
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.JWT"
+              example:
+                token:
+                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImExNjc4Mjk0MzVAZ21haWwuY29tIiwiZXhwIjoxNTc1NTE1NTYyLCJwYXNzd29yZCI6IiQyYSQxMCRtVWFiQ2p4WE9oZEhOWXZzaElGUXB1ZEhTTE1jSGNCU1F3cE1pdVFHN0VIWTZ6SDE1RXd6QyJ9.4h7a50MQmUK56FXTilpo4kQ7LLab47_oaeZ71ulqKrM"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "E-mail or Password error!"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Invaild Password!"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
+      summary: login
+      tags:
+        - Mysql_User
+
+
+  "/mssql/signup":
+    post:
+      description: 註冊
+      requestBody:
+        $ref: "#/components/requestBodies/models.user"
+      responses:
+        "200":
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.user"
+              example: 
+                  email:
+                    "test@example.com"
+                  password:
+                    ""
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "E-mail or Password error!"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "E-mail already taken!"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
+      summary: create a new account
+      tags:
+        - Mssql_User       
+  "/mssql/login":
+    post:
+      description: 登入
+      requestBody:
+        $ref: "#/components/requestBodies/models.user"
+      responses:
+        "200":
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.JWT"
+             example:
+                token:
+                  "MCRtVWFiQ2p4WE9oZEhOWXZzaElGUXB1ZEhTTE1jSGNCU1F3cE1pdVFHN0VIWTZ6SDE1RXd6QyJ9.4h7a50MQmUK56FXTilpo4kQ7LLab47_oaeZ71ulqKrM"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+            example: 
+                  "E-mail or Password error!"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Invaild Password!"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
+      summary: login
+      tags:
+        - Mssql_User
+  
+
+  "/v1/mysql/getall":
+    get:
+      security:
+        - Bearer: []
+      description: 從peoples取得所有資料
+      responses:
+        "200":
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.People"
+              example:
+                Key1:
+                  "1"   
+                Key2:
+                  "2"  
+                Key3:
+                  "3"   
+                Number:
+                  100  
+                Gender:
+                  1    
+                Birth:
+                  83   
+                Injury_degree:
+                  "3" 
+                Injury_position:
+                  10
+                Protection:
+                  1 
+                Phone:
+                  2 
+                Person:
+                  "B03" 
+                Car: 
+                  "7" 
+                Action_status:
+                  1 
+                Qualification:
+                  2 
+                License:
+                  3        
+                Drinking:
+                  1       
+                Hit:
+                  2 
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
+      summary: get all data from peoples
+      tags:
+        - People
+  "/v1/mysql/getsome":
+    get:
+      security:
+        - Bearer: []
+      description: 從peoples取得部分資料
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/model.mysqlgetsome"
+        description: get some data from condition
+        required: true
+      responses:
+        "200":
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.People"
+              example:
+                Key1:
+                  "1"   
+                Key2:
+                  "2"  
+                Key3:
+                  "3"   
+                Number:
+                  100  
+                Gender:
+                  1    
+                Birth:
+                  83   
+                Injury_degree:
+                  "3" 
+                Injury_position:
+                  10
+                Protection:
+                  1 
+                Phone:
+                  2 
+                Person:
+                  "B03" 
+                Car: 
+                  "7" 
+                Action_status:
+                  1 
+                Qualification:
+                  2 
+                License:
+                  3        
+                Drinking:
+                  1       
+                Hit:
+                  2 
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "The user does not exist!"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
+      summary: get some data from events
+      tags:
+        - People 
+  "/v1/mysql/addvalue":
+    post:
+      security:
+        - Bearer: []
+      description: 插入數值至peoples
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/model.People"
+        description: add data
+        required: true
+      responses:
+        "200":
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.People"
+              example:
+                Key1:
+                  "1"   
+                Key2:
+                  "2"  
+                Key3:
+                  "3"   
+                Number:
+                  100  
+                Gender:
+                  1    
+                Birth:
+                  83   
+                Injury_degree:
+                  "3" 
+                Injury_position:
+                  10
+                Protection:
+                  1 
+                Phone:
+                  2 
+                Person:
+                  "B03" 
+                Car: 
+                  "7" 
+                Action_status:
+                  1 
+                Qualification:
+                  2 
+                License:
+                  3        
+                Drinking:
+                  1       
+                Hit:
+                  2 
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
+      summary: add value to peoples
+      tags:
+        - People
+  "/v1/mysql/delete":
+    delete:
+      security:
+        - Bearer: []
+      description: 刪除peoples數值
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/model.mysqldelete"
+        description: delete data
+        required: true
+      responses:
+        "200":
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: string
+              example:
+                "Successfully delete"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
+      summary: delete value
+      tags:
+        - People
+  "/v1/mysql/update":
+    put:
+      security:
+        - Bearer: []
+      description: 更新peoples數值
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/model.mysqlupdate"
+        description: update data
+        required: true
+      responses:
+        "200":
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: string
+              example:
+                "Successfully update"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
+      summary: update value
+      tags:
+        - People
+
+
+  /v1/mssql/addvalue:
+    post:
+      security:
+        - Bearer: []
+      description: 加入數值至events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/model.Event"
+        description: add data
+        required: true
+      responses:
+        "200":
+          description: add value
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Event"
+        "500":
+          description: Serve(database) error!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+      summary: add value to events
+      tags:
+        - Event
+  /v1/mssql/delete:
+    delete:
+      security:
+        - Bearer: []
+      description: 刪除events資料
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/model.mssqldelete"
+        description: delete data
+        required: true
+      responses:
+        "200":
+          description: Successful delete!
+          content:
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Serve(database) error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+      summary: delete value
+      tags:
+        - Event
+  /v1/mssql/getall:
+    get:
+      security:
+        - Bearer: []
+      description: 從events取得所有資料
+      responses:
+        "200":
+          description: get all data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Event"
+        "500":
+          description: Serve(database) error!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+      summary: get all data from events
+      tags:
+        - Event
+  /v1/mssql/getsome:
+    get:
+      security:
+        - Bearer: []
+      description: 從events取得部分資料
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/model.mssqlgetsome"
+        description: get some data from condition
+        required: true
+      responses:
+        "200":
+          description: data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Event"
+        "400":
+          description: The user does not exist!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+        "500":
+          description: Serve(database) error!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+      summary: get some data from events
+      tags:
+        - Event
+  /v1/mssql/update:
+    put:
+      security:
+        - Bearer: []
+      description: 更新events資料
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/model.mssqlupdate"
+        description: update data
+        required: true
+      responses:
+        "200":
+          description: Successful update!
+          content:
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Serve(database) error!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+      summary: update value
+      tags:
+        - Event
+
+    /v1/join/getall:
+    get:
+      description: 取得所有資料
+      responses:
+        "200":
+          description: join data
+          content:
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Serve(database) error!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+      summary: 取得關聯表所有資料
+      tags:
+        - JoinTable
+  /v1/join/getsome:
+    get:
+      description: 取得部分資料
+      responses:
+        "200":
+          description: join data
+          content:
+            application/json:
+              schema:
+                type: string
+        "404":
+          description: The user does not exist!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+        "500":
+          description: Serve(database) error!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+      summary: 取得關聯表部分資料
+      tags:
+        - JoinTable
+servers:
+  - url: http://localhost:8080/v1
+components:
+  requestBodies:
+    models.user:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/models.user"
+          example:
+              id: "example@gmail.com"
+              password: "a123456"
+      description: 個人資料
+      required: true
+  schemas:
+    model.Event:
+      properties:
+        accident_chinese:
+          type: string
+        anecdote_chinese:
+          type: string
+        city:
+          type: string
+        death:
+          type: string
+        death_exceed:
+          type: string
+        injured:
+          type: string
+        key1:
+          type: string
+        key2:
+          type: string
+        key3:
+          type: string
+        lane:
+          type: string
+        light:
+          type: string
+        position:
+          type: string
+        time_month:
+          type: string
+        time_year:
+          type: integer
+        weather:
+          type: string
+      type: object
+    model.People:
+      properties:
+        action_status:
+          type: integer
+        birth:
+          type: integer
+        car:
+          type: string
+        drinking:
+          type: integer
+        gender:
+          type: integer
+        hit:
+          type: integer
+        injury_degree:
+          type: string
+        injury_position:
+          type: integer
+        key1:
+          type: string
+        key2:
+          type: string
+        key3:
+          type: string
+        license:
+          type: integer
+        number:
+          type: integer
+        person:
+          type: string
+        phone:
+          type: integer
+        protection:
+          type: integer
+        qualification:
+          type: integer
+      type: object
+    model.mssqldelete:
+      properties:
+        key1:
+          type: string
+      type: object
+    model.mssqlgetsome:
+      properties:
+        key1:
+          type: string
+        key2:
+          type: string
+        key3:
+          type: string
+      type: object
+    model.mssqlupdate:
+      properties:
+        death:
+          type: string
+        key1:
+          type: string
+      type: object
+    model.mysqldelete:
+      properties:
+        key1:
+          type: string
+      type: object
+    model.mysqlgetsome:
+      properties:
+        key1:
+          type: string
+        key2:
+          type: string
+        key3:
+          type: string
+      type: object
+    model.mysqlupdate:
+      properties:
+        birth:
+          type: integer
+        key1:
+          type: string
+      type: object
+    models.Error:
+      properties:
+        message:
+          type: string
+      type: object
+    models.Event:
+      properties:
+        accident_chinese:
+          type: string
+        anecdote_chinese:
+          type: string
+        city:
+          type: string
+        death:
+          type: string
+        death_exceed:
+          type: string
+        injured:
+          type: string
+        key1:
+          type: string
+        key2:
+          type: string
+        key3:
+          type: string
+        lane:
+          type: string
+        light:
+          type: string
+        position:
+          type: string
+        time_month:
+          type: string
+        time_year:
+          type: integer
+        weather:
+          type: string
+      type: object
+    models.JWT:
+      properties:
+        token:
+          type: string
+      type: object
+    models.JoinTable:
+      properties:
+        accident_chinese:
+          type: string
+        action_status:
+          type: integer
+        anecdote_chinese:
+          type: string
+        birth:
+          type: integer
+        car:
+          type: string
+        city:
+          type: string
+        death:
+          type: string
+        death_exceed:
+          type: string
+        drinking:
+          type: integer
+        gender:
+          type: integer
+        hit:
+          type: integer
+        injured:
+          type: string
+        injury_degree:
+          type: string
+        injury_position:
+          type: integer
+        key1:
+          type: string
+        key2:
+          type: string
+        key3:
+          type: string
+        lane:
+          type: string
+        license:
+          type: integer
+        light:
+          type: string
+        number:
+          type: integer
+        person:
+          type: string
+        phone:
+          type: integer
+        position:
+          type: string
+        protection:
+          type: integer
+        qualification:
+          type: integer
+        time_month:
+          type: string
+        time_year:
+          type: integer
+        weather:
+          type: string
+      type: object
+    models.People:
+      properties:
+        action_status:
+          type: integer
+        birth:
+          type: integer
+        car:
+          type: string
+        drinking:
+          type: integer
+        gender:
+          type: integer
+        hit:
+          type: integer
+        injury_degree:
+          type: string
+        injury_position:
+          type: integer
+        key1:
+          type: string
+        key2:
+          type: string
+        key3:
+          type: string
+        license:
+          type: integer
+        number:
+          type: integer
+        person:
+          type: string
+        phone:
+          type: integer
+        protection:
+          type: integer
+        qualification:
+          type: integer
+      type: object
+    models.User:
+      properties:
+        email:
+          type: string
+        id:
+          type: integer
+        password:
+          type: string
+      type: object
+    models.user:
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      type: object

@@ -7,8 +7,7 @@ import (
 //insert value
 //mysql
 func (db *MySqlDb) MysqlInsertValue(people models.People) error {
-	err := db.Create(&people).Error
-	if err != nil {
+	if err := db.Create(&people).Error; err != nil {
 		return err
 	}
 	return nil
@@ -16,8 +15,7 @@ func (db *MySqlDb) MysqlInsertValue(people models.People) error {
 
 //mssql
 func (db *MsSqlDb) MssqlInsertValue(event models.Event) error {
-	err := db.Create(&event).Error
-	if err != nil {
+	if err := db.Create(&event).Error; err != nil {
 		return err
 	}
 	return nil
@@ -26,8 +24,7 @@ func (db *MsSqlDb) MssqlInsertValue(event models.Event) error {
 //insert the new user
 //mysql
 func (db *MySqlDb) MysqlInsertUser(user models.User) error {
-	err := db.Create(&user).Error
-	if err != nil {
+	if err := db.Create(&user).Error; err != nil {
 		return err
 	}
 	return nil
@@ -35,8 +32,7 @@ func (db *MySqlDb) MysqlInsertUser(user models.User) error {
 
 //mssql
 func (db *MsSqlDb) MssqlInsertUser(user models.User) error {
-	err := db.Create(&user).Error
-	if err != nil {
+	if err := db.Create(&user).Error; err != nil {
 		return err
 	}
 	return nil

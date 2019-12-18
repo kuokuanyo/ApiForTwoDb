@@ -1,3 +1,9 @@
+//@title Restful API(connect two databases)
+//@version 1.0.0
+//@description Define an API
+//@Schemes http
+//@host localhost:8080
+//@BasePath /v1
 package main
 
 import (
@@ -11,15 +17,16 @@ import (
 
 	_ "github.com/jinzhu/gorm/dialects/mssql"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+
+	"github.com/gorilla/mux"
 	"github.com/subosito/gotenv"
-	"src/github.com/gorilla/mux"
 )
 
+//資料庫引擎
 var MySqlDb *driver.MySqlDb
 var MsSqlDb *driver.MsSqlDb
 
 func init() {
-
 	//read .env file
 	gotenv.Load()
 
@@ -79,14 +86,16 @@ func main() {
 	router.HandleFunc("/v1/mssql/delete", controller.MssqlDelete(MsSqlDb)).Methods("DELETE")   //mysql刪除值
 
 	//join table
-	router.HandleFunc("/v1/join/getall", controller.JoinGetAll(MySqlDb, MsSqlDb)).Methods("GET") //mssql取得所有值
-	//router.HandleFunc("/v1/join/getsome", controller.JoinGetSome(MySqlDb, MsSqlDb)).Methods("GET") //mssql取得部分值
+	router.HandleFunc("/v1/join/getall", controller.JoinGetAll(MySqlDb, MsSqlDb)).Methods("GET")   //mssql取得所有值
+	router.HandleFunc("/v1/join/getsome", controller.JoinGetSome(MySqlDb, MsSqlDb)).Methods("GET") //mssql取得部分值
 
+	//安全性驗證
 	//func (r *Router) Use(mc MiddlewareChain)
 	//attach JWT auth middleware
 	router.Use(utils.MysqlJwtAuthentication)
 	router.Use(utils.MssqlJwtAuthentication)
 
+	//伺服器連線
 	//localhost
 	port := os.Getenv("PORT")
 	if port == "" {
