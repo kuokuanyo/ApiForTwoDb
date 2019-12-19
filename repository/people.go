@@ -17,7 +17,11 @@ func (u UserRepository) MysqlQueryAllData(MySqlDb *driver.MySqlDb, peoples []mod
 }
 
 func (u UserRepository) MysqlQuerySomeData(MySqlDb *driver.MySqlDb, peoples []models.People, people models.People) ([]models.People, error) {
-	peoples, err := MySqlDb.MysqlQuerySomeData(peoples, map[string]interface{}{"key1": people.Key1})
+	peoples, err := MySqlDb.MysqlQuerySomeData(peoples,
+		map[string]interface{}{"key1": people.Key1,
+			"key2": people.Key2,
+			"key3": people.Key3,
+		})
 	return peoples, err
 }
 
@@ -29,6 +33,10 @@ func (u UserRepository) MysqlUpdateData(MySqlDb *driver.MySqlDb, people models.P
 }
 
 func (u UserRepository) MysqlDeleteData(MySqlDb *driver.MySqlDb, people models.People) error {
-	err := MySqlDb.MysqlDeleteData(people, map[string]interface{}{"key1": people.Key1})
+	err := MySqlDb.MysqlDeleteData(people,
+		map[string]interface{}{"key1": people.Key1,
+			"key2": people.Key2,
+			"key3": people.Key3,
+		})
 	return err
 }

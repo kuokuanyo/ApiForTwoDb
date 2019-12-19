@@ -262,7 +262,7 @@ func (c Controller) MysqlLogin(MySqlDb *driver.MySqlDb) http.HandlerFunc {
 		}
 
 		//create token
-		token, err := utils.MysqlGenerateToken(user)
+		token, err := utils.GenerateToken(user)
 		if err != nil {
 			error.Message = "Generate Token error!"
 			utils.SendError(w, http.StatusInternalServerError, error)
@@ -342,7 +342,7 @@ func (c Controller) MssqlLogin(MsSqlDb *driver.MsSqlDb) http.HandlerFunc {
 		}
 
 		//create token
-		token, err := utils.MssqlGenerateToken(user)
+		token, err := utils.GenerateToken(user)
 		if err != nil {
 			error.Message = "Generate Token error!"
 			utils.SendError(w, http.StatusInternalServerError, error)

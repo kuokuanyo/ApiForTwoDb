@@ -9,6 +9,8 @@ import (
 	"net/http"
 
 	models "ApiForTwoDb/model"
+
+	"github.com/gorilla/mux"
 )
 
 //@Summary add value to events
@@ -16,7 +18,7 @@ import (
 //@Description 加入數值至events
 //@Accept json
 //@Produce json
-//@Param information body model.Event true "add data"
+//@Param information body models.Event true "add data"
 //@Success 200 {object} models.Event "add value"
 //@Failure 500 {object} models.Error "Serve(database) error!"
 //@Router /v1/mssql/addvalue [post]
@@ -75,11 +77,13 @@ func (c Controller) MssqlGetAll(MsSqlDb *driver.MsSqlDb) http.HandlerFunc {
 //@Description 從events取得部分資料
 //@Accept json
 //@Produce json
-//@Param information body model.mssqlgetsome true "get some data from condition"
+//@Param key1 path int true "Key1"
+//@Param key2 path int true "Key2"
+//@Param key3 path int true "Key3"
 //@Success 200 {object} models.Event "data"
 //@Failure 400 {object} models.Error "The user does not exist!"
 //@Failure 500 {object} models.Error "Serve(database) error!"
-//@Router /v1/mssql/getsome [get]
+//@Router /v1/mssql/getsome/{key1}/{key2}/{key3} [get]
 func (c Controller) MssqlGetSome(MsSqlDb *driver.MsSqlDb) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
@@ -89,8 +93,12 @@ func (c Controller) MssqlGetSome(MsSqlDb *driver.MsSqlDb) http.HandlerFunc {
 			userRepo repository.UserRepository
 		)
 
-		//decode
-		json.NewDecoder(r.Body).Decode(&event)
+		//return map
+		//func Vars(r *http.Request) map[string]string
+		params := mux.Vars(r)
+		event.Key1 = params["key1"]
+		event.Key2 = params["key2"]
+		event.Key3 = params["key3"]
 
 		events, err := userRepo.MssqlQuerySomeData(MsSqlDb, events, event)
 		if err != nil {
@@ -114,7 +122,7 @@ func (c Controller) MssqlGetSome(MsSqlDb *driver.MsSqlDb) http.HandlerFunc {
 //@Description 更新events資料
 //@Accept json
 //@Produce json
-//@Param information body model.mssqlupdate true "update data"
+//@Param information body models.mssqlupdate true "update data"
 //@Success 200 {string} string "Successful update!"
 //@Failure 500 {object} models.Error "Serve(database) error!"
 //@Router /v1/mssql/update [put]
@@ -143,10 +151,12 @@ func (c Controller) MssqlUpdate(MsSqlDb *driver.MsSqlDb) http.HandlerFunc {
 //@Description 刪除events資料
 //@Accept json
 //@Produce json
-//@Param information body model.mssqldelete true "delete data"
+//@Param key1 path int true "Key1"
+//@Param key2 path int true "Key2"
+//@Param key3 path int true "Key3"
 //@Success 200 {string} string "Successful delete!"
 //@Failure 500 {object} models.Error "Serve(database) error"
-//@Router /v1/mssql/delete [delete]
+//@Router /v1/mssql/delete/{key1}/{key2}/{key3} [delete]
 func (c Controller) MssqlDelete(MsSqlDb *driver.MsSqlDb) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
@@ -155,8 +165,12 @@ func (c Controller) MssqlDelete(MsSqlDb *driver.MsSqlDb) http.HandlerFunc {
 			userRepo repository.UserRepository
 		)
 
-		//decode
-		json.NewDecoder(r.Body).Decode(&event)
+		//return map
+		//func Vars(r *http.Request) map[string]string
+		params := mux.Vars(r)
+		event.Key1 = params["key1"]
+		event.Key2 = params["key2"]
+		event.Key3 = params["key3"]
 
 		if err := userRepo.MssqlDeleteData(MsSqlDb, event); err != nil {
 			error.Message = "Server(database) error!"

@@ -20,18 +20,23 @@ func (u UserRepository) MssqlQuerySomeData(MsSqlDb *driver.MsSqlDb, events []mod
 	events, err := MsSqlDb.MssqlQuerySomeData(events,
 		map[string]interface{}{"key1": event.Key1,
 			"key2": event.Key2,
-			"key3": event.Key3})
+			"key3": event.Key3,
+		})
 	return events, err
 }
 
 func (u UserRepository) MssqlUpdateData(MsSqlDb *driver.MsSqlDb, event models.Event) error {
 	err := MsSqlDb.MssqlUpdateData(event,
 		map[string]interface{}{"key1": event.Key1},
-		map[string]interface{}{"birth": event.Death})
+		map[string]interface{}{"death": event.Death})
 	return err
 }
 
 func (u UserRepository) MssqlDeleteData(MsSqlDb *driver.MsSqlDb, event models.Event) error {
-	err := MsSqlDb.MssqlDeleteData(event, map[string]interface{}{"key1": event.Key1})
+	err := MsSqlDb.MssqlDeleteData(event,
+		map[string]interface{}{"key1": event.Key1,
+			"key2": event.Key2,
+			"key3": event.Key3,
+		})
 	return err
 }

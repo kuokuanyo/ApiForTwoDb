@@ -68,32 +68,31 @@ func main() {
 	//func (r *Router) HandleFunc(path string, f func(http.ResponseWriter, *http.Request)) *Route
 	//func (r *Router) Methods(methods ...string) *Route
 	//mysql
-	router.HandleFunc("/v1/mysql/signup", controller.MysqlSignup(MySqlDb)).Methods("POST")     //mysql註冊
-	router.HandleFunc("/v1/mysql/login", controller.MysqlLogin(MySqlDb)).Methods("POST")       //mysql登入
-	router.HandleFunc("/v1/mysql/addvalue", controller.MysqlAddValue(MySqlDb)).Methods("POST") //mysql插入值
-	router.HandleFunc("/v1/mysql/getall", controller.MysqlGetAll(MySqlDb)).Methods("GET")      //mysql取得所有值
-	router.HandleFunc("/v1/mysql/getsome", controller.MysqlGetSome(MySqlDb)).Methods("GET")    //mysql取得部分值
-	router.HandleFunc("/v1/mysql/update", controller.MysqlUpdate(MySqlDb)).Methods("PUT")      //mysql更新值
-	router.HandleFunc("/v1/mysql/delete", controller.MysqlDelete(MySqlDb)).Methods("DELETE")   //mysql刪除值
+	router.HandleFunc("/v1/mysql/signup", controller.MysqlSignup(MySqlDb)).Methods("POST")                        //mysql註冊
+	router.HandleFunc("/v1/mysql/login", controller.MysqlLogin(MySqlDb)).Methods("POST")                          //mysql登入
+	router.HandleFunc("/v1/mysql/addvalue", controller.MysqlAddValue(MySqlDb)).Methods("POST")                    //mysql插入值
+	router.HandleFunc("/v1/mysql/getall", controller.MysqlGetAll(MySqlDb)).Methods("GET")                         //mysql取得所有值
+	router.HandleFunc("/v1/mysql/getsome/{key1}/{key2}/{key3}", controller.MysqlGetSome(MySqlDb)).Methods("GET")  //mysql取得部分值
+	router.HandleFunc("/v1/mysql/update", controller.MysqlUpdate(MySqlDb)).Methods("PUT")                         //mysql更新值
+	router.HandleFunc("/v1/mysql/delete/{key1}/{key2}/{key3}", controller.MysqlDelete(MySqlDb)).Methods("DELETE") //mysql刪除值
 
 	//mssql
-	router.HandleFunc("/v1/mssql/signup", controller.MssqlSignup(MsSqlDb)).Methods("POST")     //mssql註冊
-	router.HandleFunc("/v1/mssql/login", controller.MssqlLogin(MsSqlDb)).Methods("POST")       //mssql登入
-	router.HandleFunc("/v1/mssql/addvalue", controller.MssqlAddValue(MsSqlDb)).Methods("POST") //mysql插入值
-	router.HandleFunc("/v1/mssql/getall", controller.MssqlGetAll(MsSqlDb)).Methods("GET")      //mssql取得所有值
-	router.HandleFunc("/v1/mssql/getsome", controller.MssqlGetSome(MsSqlDb)).Methods("GET")    //mssql取得部分值
-	router.HandleFunc("/v1/mssql/update", controller.MssqlUpdate(MsSqlDb)).Methods("PUT")      //mssql更新值
-	router.HandleFunc("/v1/mssql/delete", controller.MssqlDelete(MsSqlDb)).Methods("DELETE")   //mysql刪除值
+	router.HandleFunc("/v1/mssql/signup", controller.MssqlSignup(MsSqlDb)).Methods("POST")                        //mssql註冊
+	router.HandleFunc("/v1/mssql/login", controller.MssqlLogin(MsSqlDb)).Methods("POST")                          //mssql登入
+	router.HandleFunc("/v1/mssql/addvalue", controller.MssqlAddValue(MsSqlDb)).Methods("POST")                    //mysql插入值
+	router.HandleFunc("/v1/mssql/getall", controller.MssqlGetAll(MsSqlDb)).Methods("GET")                         //mssql取得所有值
+	router.HandleFunc("/v1/mssql/getsome/{key1}/{key2}/{key3}", controller.MssqlGetSome(MsSqlDb)).Methods("GET")  //mssql取得部分值
+	router.HandleFunc("/v1/mssql/update", controller.MssqlUpdate(MsSqlDb)).Methods("PUT")                         //mssql更新值
+	router.HandleFunc("/v1/mssql/delete/{key1}/{key2}/{key3}", controller.MssqlDelete(MsSqlDb)).Methods("DELETE") //mysql刪除值
 
 	//join table
-	router.HandleFunc("/v1/join/getall", controller.JoinGetAll(MySqlDb, MsSqlDb)).Methods("GET")   //mssql取得所有值
-	router.HandleFunc("/v1/join/getsome", controller.JoinGetSome(MySqlDb, MsSqlDb)).Methods("GET") //mssql取得部分值
+	router.HandleFunc("/v1/join/getall", controller.JoinGetAll(MySqlDb, MsSqlDb)).Methods("GET")                        //mssql取得所有值
+	router.HandleFunc("/v1/join/getsome/{key1}/{key2}/{key3}", controller.JoinGetSome(MySqlDb, MsSqlDb)).Methods("GET") //mssql取得部分值
 
 	//安全性驗證
 	//func (r *Router) Use(mc MiddlewareChain)
 	//attach JWT auth middleware
-	router.Use(utils.MysqlJwtAuthentication)
-	router.Use(utils.MssqlJwtAuthentication)
+	router.Use(utils.JwtAuthentication)
 
 	//伺服器連線
 	//localhost

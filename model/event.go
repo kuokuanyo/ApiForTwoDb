@@ -18,18 +18,3 @@ type Event struct {
 	Accident_chinese string `gorm:"column:accident_chinese" json:"accident_chinese"`
 	Anecdote_chinese string `gorm:"column:anecdote_chinese" json:"anecdote_chinese"`
 }
-
-type mssqlgetsome struct {
-	Key1 string
-	Key2 string
-	Key3 string
-}
-
-type mssqlupdate struct {
-	Key1  string
-	Death string
-}
-
-type mssqldelete struct {
-	Key1 string
-}

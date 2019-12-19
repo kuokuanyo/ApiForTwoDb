@@ -1,0 +1,1360 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Define an API",
+    "title": "Restful API(connect two databases)",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Support",
+      "url": "http://www.example.com/support",
+      "email": "a167829435@gmail.com"
+    }
+  },
+  "paths": {
+    "/mysql/signup": {
+      "post": {
+        "description": "註冊",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/models.user"
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.user"
+                },
+                "example": {
+                  "email": "test@example.com",
+                  "password": ""
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "E-mail or Password error!"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "E-mail already taken!"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "create a new account",
+        "tags": [
+          "Mysql_User"
+        ]
+      }
+    },
+    "/mysql/login": {
+      "post": {
+        "description": "登入",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/models.user"
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.JWT"
+                },
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImExNjc4Mjk0MzVAZ21haWwuY29tIiwiZXhwIjoxNTc1NTE1NTYyLCJwYXNzd29yZCI6IiQyYSQxMCRtVWFiQ2p4WE9oZEhOWXZzaElGUXB1ZEhTTE1jSGNCU1F3cE1pdVFHN0VIWTZ6SDE1RXd6QyJ9.4h7a50MQmUK56FXTilpo4kQ7LLab47_oaeZ71ulqKrM"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "E-mail or Password error!"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Invaild Password!"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "login",
+        "tags": [
+          "Mysql_User"
+        ]
+      }
+    },
+    "/mssql/signup": {
+      "post": {
+        "description": "註冊",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/models.user"
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.user"
+                },
+                "example": {
+                  "email": "test@example.com",
+                  "password": ""
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "E-mail or Password error!"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "E-mail already taken!"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "create a new account",
+        "tags": [
+          "Mssql_User"
+        ]
+      }
+    },
+    "/mssql/login": {
+      "post": {
+        "description": "登入",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/models.user"
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.JWT"
+                },
+                "example": {
+                  "token": "MCRtVWFiQ2p4WE9oZEhOWXZzaElGUXB1ZEhTTE1jSGNCU1F3cE1pdVFHN0VIWTZ6SDE1RXd6QyJ9.4h7a50MQmUK56FXTilpo4kQ7LLab47_oaeZ71ulqKrM"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "E-mail or Password error!"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Invaild Password!"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "login",
+        "tags": [
+          "Mssql_User"
+        ]
+      }
+    },
+    "/v1/mysql/getall": {
+      "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "從peoples取得所有資料",
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.People"
+                },
+                "example": {
+                  "Key1": "1",
+                  "Key2": "2",
+                  "Key3": "3",
+                  "Number": 100,
+                  "Gender": 1,
+                  "Birth": 83,
+                  "Injury_degree": "3",
+                  "Injury_position": 10,
+                  "Protection": 1,
+                  "Phone": 2,
+                  "Person": "B03",
+                  "Car": "7",
+                  "Action_status": 1,
+                  "Qualification": 2,
+                  "License": 3,
+                  "Drinking": 1,
+                  "Hit": 2
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "get all data from peoples",
+        "tags": [
+          "People"
+        ]
+      }
+    },
+    "/v1/mysql/getsome/{key1}/{key2}/{key3}": {
+      "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "從peoples取得部分資料",
+        "parameters": [
+          {
+            "name": "key1",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key2",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key3",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.People"
+                },
+                "example": {
+                  "Key1": "1",
+                  "Key2": "2",
+                  "Key3": "3",
+                  "Number": 100,
+                  "Gender": 1,
+                  "Birth": 83,
+                  "Injury_degree": "3",
+                  "Injury_position": 10,
+                  "Protection": 1,
+                  "Phone": 2,
+                  "Person": "B03",
+                  "Car": "7",
+                  "Action_status": 1,
+                  "Qualification": 2,
+                  "License": 3,
+                  "Drinking": 1,
+                  "Hit": 2
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "The user does not exist!"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "get some data from events",
+        "tags": [
+          "People"
+        ]
+      }
+    },
+    "/v1/mysql/addvalue": {
+      "post": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "插入數值至peoples",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/models.People"
+              }
+            }
+          },
+          "description": "add data",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.People"
+                },
+                "example": {
+                  "Key1": "1",
+                  "Key2": "2",
+                  "Key3": "3",
+                  "Number": 100,
+                  "Gender": 1,
+                  "Birth": 83,
+                  "Injury_degree": "3",
+                  "Injury_position": 10,
+                  "Protection": 1,
+                  "Phone": 2,
+                  "Person": "B03",
+                  "Car": "7",
+                  "Action_status": 1,
+                  "Qualification": 2,
+                  "License": 3,
+                  "Drinking": 1,
+                  "Hit": 2
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "add value to peoples",
+        "tags": [
+          "People"
+        ]
+      }
+    },
+    "/v1/mysql/update": {
+      "put": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "更新peoples數值",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/model.mysqlupdate"
+              },
+              "example": {
+                "key1": "12345",
+                "death": "0"
+              }
+            }
+          },
+          "description": "update data",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Successfully update"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "update value",
+        "tags": [
+          "People"
+        ]
+      }
+    },
+    "/v1/mysql/delete/{key1}/{key2}/{key3}": {
+      "delete": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "刪除peoples數值",
+        "parameters": [
+          {
+            "name": "key1",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key2",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key3",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Successfully delete"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "delete value",
+        "tags": [
+          "People"
+        ]
+      }
+    },
+    "/v1/mssql/getall": {
+      "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "從events取得所有資料",
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Event"
+                },
+                "example": {
+                  "Key1": "10600",
+                  "Key2": "10604240020017",
+                  "Key3": "A24WZ",
+                  "City": "台中",
+                  "Position": "國道一號",
+                  "Lane": "外側",
+                  "Death": "0",
+                  "Injured": "2",
+                  "Death_exceed": "0",
+                  "Weather": "晴",
+                  "Light": "日間光線",
+                  "Time_year": 2017,
+                  "Time_month": "4",
+                  "Accident_chinese": "車與車",
+                  "Anecdote_chinese": "駕駛人"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "get all data from events",
+        "tags": [
+          "Event"
+        ]
+      }
+    },
+    "/v1/mssql/getsome/{key1}/{key2}/{key3}": {
+      "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "從events取得部分資料",
+        "parameters": [
+          {
+            "name": "key1",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key2",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key3",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Event"
+                },
+                "example": {
+                  "Key1": "10600",
+                  "Key2": "10604240020017",
+                  "Key3": "A24WZ",
+                  "City": "台中",
+                  "Position": "國道一號",
+                  "Lane": "外側",
+                  "Death": "0",
+                  "Injured": "2",
+                  "Death_exceed": "0",
+                  "Weather": "晴",
+                  "Light": "日間光線",
+                  "Time_year": 2017,
+                  "Time_month": "4",
+                  "Accident_chinese": "車與車",
+                  "Anecdote_chinese": "駕駛人"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "The user does not exist!"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "get some data from events",
+        "tags": [
+          "Event"
+        ]
+      }
+    },
+    "/v1/mssql/addvalue": {
+      "post": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "加入數值至events",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/models.Event"
+              }
+            }
+          },
+          "description": "add data",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Event"
+                },
+                "example": {
+                  "Key1": "10600",
+                  "Key2": "10604240020017",
+                  "Key3": "A24WZ",
+                  "City": "台中",
+                  "Position": "國道一號",
+                  "Lane": "外側",
+                  "Death": "0",
+                  "Injured": "2",
+                  "Death_exceed": "0",
+                  "Weather": "晴",
+                  "Light": "日間光線",
+                  "Time_year": 2017,
+                  "Time_month": "4",
+                  "Accident_chinese": "車與車",
+                  "Anecdote_chinese": "駕駛人"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "add value to events",
+        "tags": [
+          "Event"
+        ]
+      }
+    },
+    "/v1/mssql/update": {
+      "put": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "更新events資料",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/model.mssqlupdate"
+              },
+              "example": {
+                "key1": "12345",
+                "birth": 83
+              }
+            }
+          },
+          "description": "update data",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Successfully update"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "update value",
+        "tags": [
+          "Event"
+        ]
+      }
+    },
+    "/v1/mssql/delete/{key1}/{key2}/{key3}": {
+      "delete": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "刪除events資料",
+        "parameters": [
+          {
+            "name": "key1",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key2",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key3",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Successfully delete"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "delete value",
+        "tags": [
+          "Event"
+        ]
+      }
+    },
+    "/v1/join/getall": {
+      "get": {
+        "description": "取得所有資料",
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.JoinTable"
+                },
+                "example": {
+                  "Key1": "10600",
+                  "Key2": "10604240020017",
+                  "Key3": "A24WZ",
+                  "Number": 100,
+                  "Gender": 1,
+                  "Birth": 83,
+                  "Injury_degree": "3",
+                  "Injury_position": 10,
+                  "Protection": 1,
+                  "Phone": 2,
+                  "Person": "B03",
+                  "Car": "7",
+                  "Action_status": 1,
+                  "Qualification": 2,
+                  "License": 3,
+                  "Drinking": 1,
+                  "Hit": 2,
+                  "City": "台中",
+                  "Position": "國道一號",
+                  "Lane": "外側",
+                  "Death": "0",
+                  "Injured": "2",
+                  "Death_exceed": "0",
+                  "Weather": "晴",
+                  "Light": "日間光線",
+                  "Time_year": 2017,
+                  "Time_month": "4",
+                  "Accident_chinese": "車與車",
+                  "Anecdote_chinese": "駕駛人"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "取得關聯表部分資料",
+        "tags": [
+          "JoinTable"
+        ]
+      }
+    },
+    "/v1/join/getsome/{key1}/{key2}/{key3}": {
+      "get": {
+        "parameters": [
+          {
+            "name": "key1",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key2",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key3",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "description": "取得部分資料",
+        "responses": {
+          "200": {
+            "description": "Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.JoinTable"
+                },
+                "example": {
+                  "Key1": "10600",
+                  "Key2": "10604240020017",
+                  "Key3": "A24WZ",
+                  "Number": 100,
+                  "Gender": 1,
+                  "Birth": 83,
+                  "Injury_degree": "3",
+                  "Injury_position": 10,
+                  "Protection": 1,
+                  "Phone": 2,
+                  "Person": "B03",
+                  "Car": "7",
+                  "Action_status": 1,
+                  "Qualification": 2,
+                  "License": 3,
+                  "Drinking": 1,
+                  "Hit": 2,
+                  "City": "台中",
+                  "Position": "國道一號",
+                  "Lane": "外側",
+                  "Death": "0",
+                  "Injured": "2",
+                  "Death_exceed": "0",
+                  "Weather": "晴",
+                  "Light": "日間光線",
+                  "Time_year": 2017,
+                  "Time_month": "4",
+                  "Accident_chinese": "車與車",
+                  "Anecdote_chinese": "駕駛人"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "The user does not exist!"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/models.Error"
+                },
+                "example": "Serve(database) error!"
+              }
+            }
+          }
+        },
+        "summary": "取得關聯表部分資料",
+        "tags": [
+          "JoinTable"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/v1"
+    }
+  ],
+  "components": {
+    "requestBodies": {
+      "models.user": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/models.user"
+            },
+            "example": {
+              "id": "example@gmail.com",
+              "password": "a123456"
+            }
+          }
+        },
+        "description": "個人資料",
+        "required": true
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "model.mssqlupdate": {
+        "properties": {
+          "death": {
+            "type": "string"
+          },
+          "key1": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "model.mysqlupdate": {
+        "properties": {
+          "birth": {
+            "type": "integer"
+          },
+          "key1": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "models.Error": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "models.Event": {
+        "properties": {
+          "accident_chinese": {
+            "type": "string"
+          },
+          "anecdote_chinese": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "death": {
+            "type": "string"
+          },
+          "death_exceed": {
+            "type": "string"
+          },
+          "injured": {
+            "type": "string"
+          },
+          "key1": {
+            "type": "string"
+          },
+          "key2": {
+            "type": "string"
+          },
+          "key3": {
+            "type": "string"
+          },
+          "lane": {
+            "type": "string"
+          },
+          "light": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "time_month": {
+            "type": "string"
+          },
+          "time_year": {
+            "type": "integer"
+          },
+          "weather": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "models.JWT": {
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "models.JoinTable": {
+        "properties": {
+          "accident_chinese": {
+            "type": "string"
+          },
+          "action_status": {
+            "type": "integer"
+          },
+          "anecdote_chinese": {
+            "type": "string"
+          },
+          "birth": {
+            "type": "integer"
+          },
+          "car": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "death": {
+            "type": "string"
+          },
+          "death_exceed": {
+            "type": "string"
+          },
+          "drinking": {
+            "type": "integer"
+          },
+          "gender": {
+            "type": "integer"
+          },
+          "hit": {
+            "type": "integer"
+          },
+          "injured": {
+            "type": "string"
+          },
+          "injury_degree": {
+            "type": "string"
+          },
+          "injury_position": {
+            "type": "integer"
+          },
+          "key1": {
+            "type": "string"
+          },
+          "key2": {
+            "type": "string"
+          },
+          "key3": {
+            "type": "string"
+          },
+          "lane": {
+            "type": "string"
+          },
+          "license": {
+            "type": "integer"
+          },
+          "light": {
+            "type": "string"
+          },
+          "number": {
+            "type": "integer"
+          },
+          "person": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "integer"
+          },
+          "position": {
+            "type": "string"
+          },
+          "protection": {
+            "type": "integer"
+          },
+          "qualification": {
+            "type": "integer"
+          },
+          "time_month": {
+            "type": "string"
+          },
+          "time_year": {
+            "type": "integer"
+          },
+          "weather": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "models.People": {
+        "properties": {
+          "action_status": {
+            "type": "integer"
+          },
+          "birth": {
+            "type": "integer"
+          },
+          "car": {
+            "type": "string"
+          },
+          "drinking": {
+            "type": "integer"
+          },
+          "gender": {
+            "type": "integer"
+          },
+          "hit": {
+            "type": "integer"
+          },
+          "injury_degree": {
+            "type": "string"
+          },
+          "injury_position": {
+            "type": "integer"
+          },
+          "key1": {
+            "type": "string"
+          },
+          "key2": {
+            "type": "string"
+          },
+          "key3": {
+            "type": "string"
+          },
+          "license": {
+            "type": "integer"
+          },
+          "number": {
+            "type": "integer"
+          },
+          "person": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "integer"
+          },
+          "protection": {
+            "type": "integer"
+          },
+          "qualification": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "models.user": {
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    }
+  }
+}

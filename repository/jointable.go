@@ -85,6 +85,7 @@ func (u UserRepository) QuerySomeJoinData(MySqlDb *driver.MySqlDb, jointables []
 	jointables, err := MySqlDb.QuerySomeJoinData(jointables,
 		map[string]interface{}{"key1": jointable.Key1,
 			"key2": jointable.Key2,
-			"key3": jointable.Key3})
+			"key3": jointable.Key3,
+		})
 	return jointables, err
 }

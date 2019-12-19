@@ -1,14 +1,13 @@
 openapi: 3.0.0
 info:
   description: Define an API
-  license: {}
   title: Restful API(connect two databases)
   version: 1.0.0
   contact:
     name: API Support
     url: http://www.example.com/support
     email: a167829435@gmail.com
-    
+
 paths:
   "/mysql/signup":
     post:
@@ -154,7 +153,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/models.JWT"
-             example:
+              example:
                 token:
                   "MCRtVWFiQ2p4WE9oZEhOWXZzaElGUXB1ZEhTTE1jSGNCU1F3cE1pdVFHN0VIWTZ6SDE1RXd6QyJ9.4h7a50MQmUK56FXTilpo4kQ7LLab47_oaeZ71ulqKrM"
         "400":
@@ -163,7 +162,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/models.Error"
-            example: 
+              example: 
                   "E-mail or Password error!"
         "401":
           description: Unauthorized
@@ -244,18 +243,27 @@ paths:
       summary: get all data from peoples
       tags:
         - People
-  "/v1/mysql/getsome":
+  "/v1/mysql/getsome/{key1}/{key2}/{key3}":
     get:
       security:
         - Bearer: []
       description: 從peoples取得部分資料
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/model.mysqlgetsome"
-        description: get some data from condition
-        required: true
+      parameters:
+        - name: key1
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key2
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key3
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Successfully
@@ -326,7 +334,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/model.People"
+              $ref: "#/components/schemas/models.People"
         description: add data
         required: true
       responses:
@@ -382,38 +390,6 @@ paths:
       summary: add value to peoples
       tags:
         - People
-  "/v1/mysql/delete":
-    delete:
-      security:
-        - Bearer: []
-      description: 刪除peoples數值
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/model.mysqldelete"
-        description: delete data
-        required: true
-      responses:
-        "200":
-          description: Successfully
-          content:
-            application/json:
-              schema:
-                type: string
-              example:
-                "Successfully delete"
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.Error"
-              example: 
-                  "Serve(database) error!"
-      summary: delete value
-      tags:
-        - People
   "/v1/mysql/update":
     put:
       security:
@@ -424,6 +400,11 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/model.mysqlupdate"
+            example: 
+              key1:
+                "12345"
+              death:
+                "0"
         description: update data
         required: true
       responses:
@@ -446,9 +427,183 @@ paths:
       summary: update value
       tags:
         - People
+  "/v1/mysql/delete/{key1}/{key2}/{key3}":
+    delete:
+      security:
+        - Bearer: []
+      description: 刪除peoples數值
+      parameters:
+        - name: key1
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key2
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key3
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: string
+              example:
+                "Successfully delete"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
+      summary: delete value
+      tags:
+        - People
 
+  
+  "/v1/mssql/getall":
+      get:
+        security:
+          - Bearer: []
+        description: 從events取得所有資料
+        responses:
+          "200":
+            description: Successfully
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/models.Event"
+                example:
+                  Key1:
+                    "10600"             
+                  Key2:
+                    "10604240020017"  
+                  Key3:
+                    "A24WZ"         
+                  City:
+                    "台中"         
+                  Position:
+                    "國道一號"   
+                  Lane:
+                    "外側"      
+                  Death:
+                    "0"       
+                  Injured:
+                    "2"      
+                  Death_exceed:
+                    "0"  
+                  Weather:
+                    "晴"      
+                  Light:
+                    "日間光線"  
+                  Time_year:
+                    2017  
+                  Time_month:
+                    "4" 
+                  Accident_chinese:
+                    "車與車" 
+                  Anecdote_chinese:
+                    "駕駛人" 
 
-  /v1/mssql/addvalue:
+          "500":
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/models.Error"
+                example: 
+                    "Serve(database) error!"
+        summary: get all data from events
+        tags:
+          - Event
+  "/v1/mssql/getsome/{key1}/{key2}/{key3}":
+    get:
+      security:
+        - Bearer: []
+      description: 從events取得部分資料
+      parameters:
+        - name: key1
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key2
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key3
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+            description: Successfully
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/models.Event"
+                example:
+                  Key1:
+                    "10600"             
+                  Key2:
+                    "10604240020017"  
+                  Key3:
+                    "A24WZ"         
+                  City:
+                    "台中"         
+                  Position:
+                    "國道一號"   
+                  Lane:
+                    "外側"      
+                  Death:
+                    "0"       
+                  Injured:
+                    "2"      
+                  Death_exceed:
+                    "0"  
+                  Weather:
+                    "晴"      
+                  Light:
+                    "日間光線"  
+                  Time_year:
+                    2017  
+                  Time_month:
+                    "4" 
+                  Accident_chinese:
+                    "車與車" 
+                  Anecdote_chinese:
+                    "駕駛人" 
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "The user does not exist!"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
+      summary: get some data from events
+      tags:
+        - Event
+  "/v1/mssql/addvalue":
     post:
       security:
         - Bearer: []
@@ -457,109 +612,59 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/model.Event"
+              $ref: "#/components/schemas/models.Event"
         description: add data
         required: true
       responses:
         "200":
-          description: add value
+          description: Successfully
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/models.Event"
+              example:
+                Key1:
+                  "10600"             
+                Key2:
+                  "10604240020017"  
+                Key3:
+                  "A24WZ"         
+                City:
+                  "台中"         
+                Position:
+                  "國道一號"   
+                Lane:
+                  "外側"      
+                Death:
+                  "0"       
+                Injured:
+                  "2"      
+                Death_exceed:
+                  "0"  
+                Weather:
+                  "晴"      
+                Light:
+                  "日間光線"  
+                Time_year:
+                  2017  
+                Time_month:
+                  "4" 
+                Accident_chinese:
+                  "車與車" 
+                Anecdote_chinese:
+                  "駕駛人" 
         "500":
-          description: Serve(database) error!
+          description: Internal Server Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
       summary: add value to events
       tags:
         - Event
-  /v1/mssql/delete:
-    delete:
-      security:
-        - Bearer: []
-      description: 刪除events資料
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/model.mssqldelete"
-        description: delete data
-        required: true
-      responses:
-        "200":
-          description: Successful delete!
-          content:
-            application/json:
-              schema:
-                type: string
-        "500":
-          description: Serve(database) error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.Error"
-      summary: delete value
-      tags:
-        - Event
-  /v1/mssql/getall:
-    get:
-      security:
-        - Bearer: []
-      description: 從events取得所有資料
-      responses:
-        "200":
-          description: get all data
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.Event"
-        "500":
-          description: Serve(database) error!
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.Error"
-      summary: get all data from events
-      tags:
-        - Event
-  /v1/mssql/getsome:
-    get:
-      security:
-        - Bearer: []
-      description: 從events取得部分資料
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/model.mssqlgetsome"
-        description: get some data from condition
-        required: true
-      responses:
-        "200":
-          description: data
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.Event"
-        "400":
-          description: The user does not exist!
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.Error"
-        "500":
-          description: Serve(database) error!
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.Error"
-      summary: get some data from events
-      tags:
-        - Event
-  /v1/mssql/update:
+  "/v1/mssql/update":
     put:
       security:
         - Bearer: []
@@ -569,66 +674,258 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/model.mssqlupdate"
+            example: 
+              key1:
+                "12345"
+              birth:
+                83
         description: update data
         required: true
       responses:
         "200":
-          description: Successful update!
+          description: Successfully
           content:
             application/json:
               schema:
                 type: string
+              example:
+                "Successfully update"
         "500":
-          description: Serve(database) error!
+          description: Internal Server Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
       summary: update value
       tags:
         - Event
+  
+  "/v1/mssql/delete/{key1}/{key2}/{key3}":
+    delete:
+      security:
+        - Bearer: []
+      description: 刪除events資料
+      parameters:
+        - name: key1
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key2
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key3
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: string
+              example:
+                "Successfully delete"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Error"
+              example: 
+                  "Serve(database) error!"
+      summary: delete value
+      tags:
+        - Event
 
-    /v1/join/getall:
+
+  "/v1/join/getall":
     get:
       description: 取得所有資料
       responses:
         "200":
-          description: join data
+          description: Successfully
           content:
-            application/json:
-              schema:
-                type: string
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/models.JoinTable"
+                example:
+                  Key1:
+                    "10600"             
+                  Key2:
+                    "10604240020017"  
+                  Key3:
+                    "A24WZ"   
+                  Number:
+                    100  
+                  Gender:
+                    1    
+                  Birth:
+                    83   
+                  Injury_degree:
+                    "3" 
+                  Injury_position: 
+                    10
+                  Protection: 
+                    1 
+                  Phone: 
+                    2 
+                  Person: 
+                    "B03" 
+                  Car: 
+                    "7" 
+                  Action_status:
+                    1 
+                  Qualification:
+                    2 
+                  License:
+                    3        
+                  Drinking:
+                    1       
+                  Hit:
+                    2          
+                  City:
+                    "台中"         
+                  Position:
+                    "國道一號"   
+                  Lane:
+                    "外側"      
+                  Death:
+                    "0"       
+                  Injured:
+                    "2"      
+                  Death_exceed:
+                    "0"  
+                  Weather:
+                    "晴"      
+                  Light:
+                    "日間光線"  
+                  Time_year:
+                    2017  
+                  Time_month:
+                    "4" 
+                  Accident_chinese:
+                    "車與車" 
+                  Anecdote_chinese:
+                    "駕駛人" 
         "500":
-          description: Serve(database) error!
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.Error"
-      summary: 取得關聯表所有資料
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/models.Error"
+                example: 
+                    "Serve(database) error!"
+      summary: 取得關聯表部分資料
       tags:
         - JoinTable
-  /v1/join/getsome:
+  "/v1/join/getsome/{key1}/{key2}/{key3}":
     get:
+      parameters:
+        - name: key1
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key2
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key3
+          in: path
+          required: true
+          schema:
+            type: string
       description: 取得部分資料
       responses:
         "200":
-          description: join data
+          description: Successfully
           content:
-            application/json:
-              schema:
-                type: string
-        "404":
-          description: The user does not exist!
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/models.JoinTable"
+                example:
+                  Key1:
+                    "10600"             
+                  Key2:
+                    "10604240020017"  
+                  Key3:
+                    "A24WZ"   
+                  Number:
+                    100  
+                  Gender:
+                    1    
+                  Birth:
+                    83   
+                  Injury_degree:
+                    "3" 
+                  Injury_position: 
+                    10
+                  Protection: 
+                    1 
+                  Phone: 
+                    2 
+                  Person: 
+                    "B03" 
+                  Car: 
+                    "7" 
+                  Action_status:
+                    1 
+                  Qualification:
+                    2 
+                  License:
+                    3        
+                  Drinking:
+                    1       
+                  Hit:
+                    2          
+                  City:
+                    "台中"         
+                  Position:
+                    "國道一號"   
+                  Lane:
+                    "外側"      
+                  Death:
+                    "0"       
+                  Injured:
+                    "2"      
+                  Death_exceed:
+                    "0"  
+                  Weather:
+                    "晴"      
+                  Light:
+                    "日間光線"  
+                  Time_year:
+                    2017  
+                  Time_month:
+                    "4" 
+                  Accident_chinese:
+                    "車與車" 
+                  Anecdote_chinese:
+                    "駕駛人" 
+        "400":
+          description: Bad Request
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/models.Error"
+              example: 
+                  "The user does not exist!"
         "500":
-          description: Serve(database) error!
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.Error"
+            description: Internal Server Error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/models.Error"
+                example: 
+                    "Serve(database) error!"
       summary: 取得關聯表部分資料
       tags:
         - JoinTable
@@ -646,110 +943,18 @@ components:
               password: "a123456"
       description: 個人資料
       required: true
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
-    model.Event:
-      properties:
-        accident_chinese:
-          type: string
-        anecdote_chinese:
-          type: string
-        city:
-          type: string
-        death:
-          type: string
-        death_exceed:
-          type: string
-        injured:
-          type: string
-        key1:
-          type: string
-        key2:
-          type: string
-        key3:
-          type: string
-        lane:
-          type: string
-        light:
-          type: string
-        position:
-          type: string
-        time_month:
-          type: string
-        time_year:
-          type: integer
-        weather:
-          type: string
-      type: object
-    model.People:
-      properties:
-        action_status:
-          type: integer
-        birth:
-          type: integer
-        car:
-          type: string
-        drinking:
-          type: integer
-        gender:
-          type: integer
-        hit:
-          type: integer
-        injury_degree:
-          type: string
-        injury_position:
-          type: integer
-        key1:
-          type: string
-        key2:
-          type: string
-        key3:
-          type: string
-        license:
-          type: integer
-        number:
-          type: integer
-        person:
-          type: string
-        phone:
-          type: integer
-        protection:
-          type: integer
-        qualification:
-          type: integer
-      type: object
-    model.mssqldelete:
-      properties:
-        key1:
-          type: string
-      type: object
-    model.mssqlgetsome:
-      properties:
-        key1:
-          type: string
-        key2:
-          type: string
-        key3:
-          type: string
-      type: object
+
     model.mssqlupdate:
       properties:
         death:
           type: string
         key1:
-          type: string
-      type: object
-    model.mysqldelete:
-      properties:
-        key1:
-          type: string
-      type: object
-    model.mysqlgetsome:
-      properties:
-        key1:
-          type: string
-        key2:
-          type: string
-        key3:
           type: string
       type: object
     model.mysqlupdate:
@@ -899,15 +1104,6 @@ components:
           type: integer
         qualification:
           type: integer
-      type: object
-    models.User:
-      properties:
-        email:
-          type: string
-        id:
-          type: integer
-        password:
-          type: string
       type: object
     models.user:
       properties:
