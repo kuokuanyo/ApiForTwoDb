@@ -915,6 +915,11 @@
     },
     "/v1/join/getall": {
       "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "description": "取得所有資料",
         "responses": {
           "200": {
@@ -978,6 +983,11 @@
     },
     "/v1/join/getsome/{key1}/{key2}/{key3}": {
       "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "key1",
@@ -1091,7 +1101,7 @@
               "$ref": "#/components/schemas/models.user"
             },
             "example": {
-              "id": "example@gmail.com",
+              "email": "example@gmail.com",
               "password": "a123456"
             }
           }

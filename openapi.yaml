@@ -747,6 +747,8 @@ paths:
 
   "/v1/join/getall":
     get:
+      security:
+        - Bearer: []
       description: 取得所有資料
       responses:
         "200":
@@ -827,6 +829,8 @@ paths:
         - JoinTable
   "/v1/join/getsome/{key1}/{key2}/{key3}":
     get:
+      security:
+        - Bearer: []
       parameters:
         - name: key1
           in: path
@@ -939,7 +943,7 @@ components:
           schema:
             $ref: "#/components/schemas/models.user"
           example:
-              id: "example@gmail.com"
+              email: "example@gmail.com"
               password: "a123456"
       description: 個人資料
       required: true

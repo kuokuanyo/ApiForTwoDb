@@ -36,7 +36,7 @@ func JwtAuthentication(next http.Handler) http.Handler {
 		//不須驗證的路徑
 		paths := []string{"/v1/mysql/signup", "/v1/mysql/login",
 			"/v1/mssql/signup", "/v1/mssql/login",
-			"/v1/join/getall", "/v1/join/getsome"}
+		}
 
 		//current request path
 		requestPath := r.URL.Path
