@@ -4,6 +4,7 @@ import (
 	"ApiForTwoDb/driver"
 	"ApiForTwoDb/repository"
 	"ApiForTwoDb/utils"
+	"strings"
 
 	"encoding/json"
 	"net/http"
@@ -13,58 +14,50 @@ import (
 	"github.com/gorilla/mux"
 )
 
-//@Summary add value to peoples
-//@Tags People
-//@Description 插入數值至peoples
+//@Summary add value to database
+//@Tags Data
+//@Description 插入數值至資料庫
 //@Accept json
 //@Produce json
+//@Param sql path string true "資料庫引擎"
 //@Param information body models.People true "add data"
-//@Success 200 {object} models.People "add data"
-//@Failure 500 {object} models.Error "Serve(database) error!"
+//@Param information body models.Event true "add data"
+//@Success 200 {string}} string "Successfully"
+//@Failure 500 {object} models.Error "Internal Server Error"
 //@Router /v1/mysql/addvalue [post]
-func (c Controller) MysqlAddValue(MySqlDb *driver.MySqlDb) http.HandlerFunc {
+func (c Controller) AddValue(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+
 		var (
 			people   models.People
+			event    models.Event
 			error    models.Error
 			userRepo repository.UserRepository
 		)
 
-		//decode
-		json.NewDecoder(r.Body).Decode(&people)
+		//印出url參數
+		params := mux.Vars(r)
 
-		if err := userRepo.MysqlInsertValue(MySqlDb, people); err != nil {
-			error.Message = "Server(database) error!"
-			utils.SendError(w, http.StatusInternalServerError, error)
-			return
+		switch strings.ToLower(params["sql"]) {
+		case "mysql":
+			//decode
+			json.NewDecoder(r.Body).Decode(&people)
+			if err := userRepo.MysqlInsertValue(MySqlDb, people); err != nil {
+				error.Message = "Server(database) error!"
+				utils.SendError(w, http.StatusInternalServerError, error)
+				return
+			}
+			utils.SendSuccess(w, people)
+		case "mssql":
+			//decode
+			json.NewDecoder(r.Body).Decode(&event)
+			if err := userRepo.MssqlInsertValue(MsSqlDb, event); err != nil {
+				error.Message = "Server(database) error!"
+				utils.SendError(w, http.StatusInternalServerError, error)
+				return
+			}
+			utils.SendSuccess(w, event)
 		}
-		utils.SendSuccess(w, people)
-	}
-}
-
-//@Summary get all data from peoples
-//@Tags People
-//@Description 從peoples取得所有資料
-//@Accept json
-//@Produce json
-//@Success 200 {object} models.People "get all data"
-//@Failure 500 {object} models.Error "Serve(database) error!"
-//@Router /v1/mysql/getall [get]
-func (c Controller) MysqlGetAll(MySqlDb *driver.MySqlDb) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		var (
-			peoples  []models.People
-			error    models.Error
-			userRepo repository.UserRepository
-		)
-
-		peoples, err := userRepo.MysqlQueryAllData(MySqlDb, peoples)
-		if err != nil {
-			error.Message = "Server(database) error!"
-			utils.SendError(w, http.StatusInternalServerError, error)
-			return
-		}
-		utils.SendSuccess(w, peoples)
 	}
 }
 
@@ -163,7 +156,7 @@ func (c Controller) MysqlDelete(MySqlDb *driver.MySqlDb) http.HandlerFunc {
 
 		//return map
 		//func Vars(r *http.Request) map[string]string
-		params := mux.Vars(r) 
+		params := mux.Vars(r)
 		people.Key1 = params["key1"]
 		people.Key2 = params["key2"]
 		people.Key3 = params["key3"]
