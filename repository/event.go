@@ -16,27 +16,17 @@ func (u UserRepository) MssqlQueryAllData(MsSqlDb *driver.MsSqlDb, events []mode
 	return users, err
 }
 
-func (u UserRepository) MssqlQuerySomeData(MsSqlDb *driver.MsSqlDb, events []models.Event, event models.Event) ([]models.Event, error) {
-	events, err := MsSqlDb.MssqlQuerySomeData(events,
-		map[string]interface{}{"key1": event.Key1,
-			"key2": event.Key2,
-			"key3": event.Key3,
-		})
+func (u UserRepository) MssqlQuerySomeData(MsSqlDb *driver.MsSqlDb, events []models.Event, conditions map[string]interface{}) ([]models.Event, error) {
+	events, err := MsSqlDb.MssqlQuerySomeData(events, conditions)
 	return events, err
 }
 
-func (u UserRepository) MssqlUpdateData(MsSqlDb *driver.MsSqlDb, event models.Event) error {
-	err := MsSqlDb.MssqlUpdateData(event,
-		map[string]interface{}{"key1": event.Key1},
-		map[string]interface{}{"death": event.Death})
+func (u UserRepository) MssqlUpdateData(MsSqlDb *driver.MsSqlDb, event models.Event, conditions map[string]interface{}, update map[string]interface{}) error {
+	err := MsSqlDb.MssqlUpdateData(event, conditions, update)
 	return err
 }
 
-func (u UserRepository) MssqlDeleteData(MsSqlDb *driver.MsSqlDb, event models.Event) error {
-	err := MsSqlDb.MssqlDeleteData(event,
-		map[string]interface{}{"key1": event.Key1,
-			"key2": event.Key2,
-			"key3": event.Key3,
-		})
+func (u UserRepository) MssqlDeleteData(MsSqlDb *driver.MsSqlDb, event models.Event, conditions map[string]interface{}) error {
+	err := MsSqlDb.MssqlDeleteData(event, conditions)
 	return err
 }

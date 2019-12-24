@@ -1,17 +1,6 @@
 package controllers
 
-import (
-	"ApiForTwoDb/driver"
-	"ApiForTwoDb/repository"
-	"ApiForTwoDb/utils"
-
-	"net/http"
-
-	models "ApiForTwoDb/model"
-
-	"src/github.com/gorilla/mux"
-)
-
+/*
 //@Summary 取得關聯表所有資料
 //@Tags JoinTable
 //@Description 取得所有資料
@@ -47,7 +36,8 @@ func (c Controller) JoinGetAll(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb)
 		utils.SendSuccess(w, jointables)
 	}
 }
-
+*/
+/*
 //@Summary 取得關聯表部分資料
 //@Tags JoinTable
 //@Description 取得部分資料
@@ -101,3 +91,4 @@ func (c Controller) JoinGetSome(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb
 		utils.SendSuccess(w, jointables)
 	}
 }
+*/

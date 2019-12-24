@@ -16,27 +16,17 @@ func (u UserRepository) MysqlQueryAllData(MySqlDb *driver.MySqlDb, peoples []mod
 	return users, err
 }
 
-func (u UserRepository) MysqlQuerySomeData(MySqlDb *driver.MySqlDb, peoples []models.People, people models.People) ([]models.People, error) {
-	peoples, err := MySqlDb.MysqlQuerySomeData(peoples,
-		map[string]interface{}{"key1": people.Key1,
-			"key2": people.Key2,
-			"key3": people.Key3,
-		})
+func (u UserRepository) MysqlQuerySomeData(MySqlDb *driver.MySqlDb, peoples []models.People, conditions map[string]interface{}) ([]models.People, error) {
+	peoples, err := MySqlDb.MysqlQuerySomeData(peoples, conditions)
 	return peoples, err
 }
 
-func (u UserRepository) MysqlUpdateData(MySqlDb *driver.MySqlDb, people models.People) error {
-	err := MySqlDb.MysqlUpdateData(people,
-		map[string]interface{}{"key1": people.Key1},
-		map[string]interface{}{"birth": people.Birth})
+func (u UserRepository) MysqlUpdateData(MySqlDb *driver.MySqlDb, people models.People, conditions map[string]interface{}, update map[string]interface{}) error {
+	err := MySqlDb.MysqlUpdateData(people, conditions, update)
 	return err
 }
 
-func (u UserRepository) MysqlDeleteData(MySqlDb *driver.MySqlDb, people models.People) error {
-	err := MySqlDb.MysqlDeleteData(people,
-		map[string]interface{}{"key1": people.Key1,
-			"key2": people.Key2,
-			"key3": people.Key3,
-		})
+func (u UserRepository) MysqlDeleteData(MySqlDb *driver.MySqlDb, people models.People, conditions map[string]interface{}) error {
+	err := MySqlDb.MysqlDeleteData(people, conditions)
 	return err
 }
