@@ -4,41 +4,6 @@ import (
 	models "ApiForTwoDb/model"
 )
 
-//find some col datas
-//mysql
-func (db *MySqlDb) MysqlQueryAllDataBySomeCol(peoples []models.People, col_name []string) ([]models.People, error) {
-	if err := db.Select(col_name).Find(&peoples).Error; err != nil {
-		return nil, err
-	}
-	return peoples, nil
-}
-
-//mssql
-func (db *MsSqlDb) MssqlQueryAllDataBySomeCol(events []models.Event, col_name []string) ([]models.Event, error) {
-	if err := db.Select(col_name).Find(&events).Error; err != nil {
-		return nil, err
-	}
-	return events, nil
-}
-
-//find some joined datas by some condition
-//mysql
-func (db *MySqlDb) QuerySomeJoinData(jointables []models.JoinTable, condition map[string]interface{}) ([]models.JoinTable, error) {
-	if err := db.Where(condition).Find(&jointables).Error; err != nil {
-		return nil, err
-	}
-	return jointables, nil
-}
-
-//find all join datas
-//mysql
-func (db *MySqlDb) QueryAllJoinData(jointables []models.JoinTable) ([]models.JoinTable, error) {
-	if err := db.Find(&jointables).Error; err != nil {
-		return nil, err
-	}
-	return jointables, nil
-}
-
 //find all datas
 //mysql
 func (db *MySqlDb) MysqlQueryAllData(peoples []models.People) ([]models.People, error) {

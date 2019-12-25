@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"reflect"
 	"strings"
 	"time"
 
@@ -128,4 +129,24 @@ func GenerateToken(user models.User) (string, error) {
 		return "", err
 	}
 	return tokenString, nil
+}
+
+//struct to map
+func StructToMap(obj interface{}) map[string]interface{} {
+	//func TypeOf(i interface{}) Type
+	//回傳類型
+	t := reflect.TypeOf(obj)
+	//func ValueOf(i interface{}) Value
+	//回傳數值
+	v := reflect.ValueOf(obj)
+
+	//map
+	var data = make(map[string]interface{})
+
+	//t.NumField()返回struct數量
+	for i := 0; i < t.NumField(); i++ {
+		//Field返回第i個位置
+		data[t.Field(i).Name] = v.Field(i).Interface()
+	}
+	return data
 }
