@@ -163,7 +163,7 @@
         }
       }
     },
-    "/v1/addvalue/{sql}": {
+    "/addvalue/{sql}": {
       "post": {
         "security": [
           {
@@ -273,8 +273,8 @@
         }
       }
     },
-    "/v1/getall/{sql}": {
-      "post": {
+    "/getall/{sql}": {
+      "get": {
         "security": [
           {
             "Bearer": []
@@ -373,7 +373,7 @@
         }
       }
     },
-    "/v1/getsome/{sql}": {
+    "/getsome/{sql}": {
       "get": {
         "security": [
           {
@@ -747,7 +747,7 @@
         }
       }
     },
-    "/v1/update/{sql}": {
+    "/update/{sql}": {
       "put": {
         "security": [
           {
@@ -1321,7 +1321,7 @@
         }
       }
     },
-    "/v1/delete/{sql}": {
+    "/delete/{sql}": {
       "delete": {
         "security": [
           {
@@ -1634,7 +1634,7 @@
         }
       }
     },
-    "/v1/join/getall": {
+    "/join/getall": {
       "get": {
         "security": [
           {
@@ -1940,7 +1940,7 @@
         }
       }
     },
-    "/v1/join/getsome": {
+    "/join/getsome": {
       "get": {
         "security": [
           {

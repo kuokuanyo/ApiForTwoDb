@@ -108,7 +108,7 @@ paths:
                 Error: "Server(database) error!"
   
   
-  "/v1/addvalue/{sql}":
+  "/addvalue/{sql}":
     post:
       security:
         - Bearer: []
@@ -219,8 +219,8 @@ paths:
               example:
                 Error: "Server(database) error!"
                 
-  "/v1/getall/{sql}":
-    post:
+  "/getall/{sql}":
+    get:
       security:
         - Bearer: []
       description: 從資料庫取得所有資料
@@ -324,7 +324,7 @@ paths:
               example:
                 Error: "Server(database) error!"
                 
-  "/v1/getsome/{sql}":
+  "/getsome/{sql}":
     get:
       security:
         - Bearer: []
@@ -641,7 +641,7 @@ paths:
               example:
                 Error: "Server(database) error!"
 
-  "/v1/update/{sql}":
+  "/update/{sql}":
     put:
       security:
         - Bearer: []
@@ -1083,7 +1083,7 @@ paths:
               example:
                 Error: "Server(database) error!"
    
-  "/v1/delete/{sql}":
+  "/delete/{sql}":
     delete:
       security:
         - Bearer: []
@@ -1322,7 +1322,7 @@ paths:
               example:
                 Error: "Server(database) error!"
          
-  "/v1/join/getall":
+  "/join/getall":
     get:
       security:
         - Bearer: []
@@ -1588,7 +1588,7 @@ paths:
               example:
                 Error: "Server(database) error!"
                 
-  "/v1/join/getsome":
+  "/join/getsome":
     get:
       security:
         - Bearer: []
