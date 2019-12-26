@@ -10,16 +10,18 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-type MySqlDb struct {
+//MySQLDb struct
+type MySQLDb struct {
 	*gorm.DB
 }
 
-type MsSqlDb struct {
+//MsSQLDb struct
+type MsSQLDb struct {
 	*gorm.DB
 }
 
-//mysql資料
-type MySqlUser struct {
+//MySQLUser mysql資料
+type MySQLUser struct {
 	Host string //主機
 	//最大連接數
 	MaxIdle  int
@@ -30,8 +32,8 @@ type MySqlUser struct {
 	Port     string //端口
 }
 
-//mssql資料
-type MsSqlUser struct {
+//MsSQLUser mssql資料
+type MsSQLUser struct {
 	Host string //主機
 	//最大連接數
 	MaxIdle  int
@@ -42,8 +44,8 @@ type MsSqlUser struct {
 	Port     string //端口
 }
 
-//mysql初始化連線
-func (msu *MySqlUser) Init() *MySqlDb {
+//Init mysql初始化連線
+func (msu *MySQLUser) Init() *MySQLDb {
 
 	//完整的資料格式: [username[:password]@][protocol[(address)]]/dbname[?param1=value1&...&paramN=valueN]
 	MysqlDataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
@@ -62,11 +64,11 @@ func (msu *MySqlUser) Init() *MySqlDb {
 	Db.DB().SetMaxIdleConns(msu.MaxIdle)
 	Db.DB().SetMaxOpenConns(msu.MaxOpen)
 
-	return &MySqlDb{Db}
+	return &MySQLDb{Db}
 }
 
-//mssql初始化連線
-func (mssu *MsSqlUser) Init() *MsSqlDb {
+//Init mssql初始化連線
+func (mssu *MsSQLUser) Init() *MsSQLDb {
 
 	MssqlDataSourceName := fmt.Sprintf("serve=%s;user id=%s;password=%s;port=%s;database=%s",
 		mssu.Host,
@@ -82,5 +84,5 @@ func (mssu *MsSqlUser) Init() *MsSqlDb {
 	Db.DB().SetMaxIdleConns(mssu.MaxIdle)
 	Db.DB().SetMaxOpenConns(mssu.MaxOpen)
 
-	return &MsSqlDb{Db}
+	return &MsSQLDb{Db}
 }

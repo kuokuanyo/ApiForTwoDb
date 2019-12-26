@@ -13,21 +13,21 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-//response error
+//SendError response error
 func SendError(w http.ResponseWriter, status int, error models.Error) {
 	w.WriteHeader(status)
 	//encode
 	json.NewEncoder(w).Encode(error)
 }
 
-//response success
+//SendSuccess response success
 func SendSuccess(w http.ResponseWriter, data interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	//encode
 	json.NewEncoder(w).Encode(data)
 }
 
-//jwt驗證
+//JwtAuthentication jwt驗證
 func JwtAuthentication(next http.Handler) http.Handler {
 	//匿名函式
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -35,8 +35,8 @@ func JwtAuthentication(next http.Handler) http.Handler {
 		//從header取得token
 		authHeader := r.Header.Get("Authorization")
 		//不須驗證的路徑
-		paths := []string{"/v1/mysql/signup", "/v1/mysql/login",
-			"/v1/mssql/signup", "/v1/mssql/login",
+		paths := []string{"/v1/signup/mysql", "/v1/login/mysql",
+			"/v1/signup/mssql", "/v1/login/mssql",
 		}
 
 		//current request path
@@ -85,7 +85,7 @@ func JwtAuthentication(next http.Handler) http.Handler {
 		*/
 		token, err := jwt.Parse(authHeader, func(token *jwt.Token) (interface{}, error) {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-				return nil, fmt.Errorf("There was an error!")
+				return nil, fmt.Errorf("there was an error")
 			}
 			return []byte(os.Getenv("token_password")), nil
 		})
@@ -99,16 +99,14 @@ func JwtAuthentication(next http.Handler) http.Handler {
 		if token.Valid {
 			//通驗驗證
 			next.ServeHTTP(w, r)
-			return
 		} else {
 			errorObject.Message = err.Error()
 			SendError(w, http.StatusUnauthorized, errorObject)
-			return
 		}
 	})
 }
 
-//json-web-token
+//GenerateToken generate json-web-token
 func GenerateToken(user models.User) (string, error) {
 	s := os.Getenv("token_password")
 
@@ -131,7 +129,7 @@ func GenerateToken(user models.User) (string, error) {
 	return tokenString, nil
 }
 
-//struct to map
+//StructToMap : struct to map
 func StructToMap(obj interface{}) map[string]interface{} {
 	//func TypeOf(i interface{}) Type
 	//回傳類型

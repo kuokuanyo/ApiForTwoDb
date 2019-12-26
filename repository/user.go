@@ -6,36 +6,41 @@ import (
 	models "ApiForTwoDb/model"
 )
 
+//UserRepository struct
 type UserRepository struct{}
 
-//mysql
-func (u UserRepository) MysqlCheckSignup(MySqlDb *driver.MySqlDb, users []models.User) ([]models.User, error) {
-	users, err := MySqlDb.MysqlQueryAllUser(users)
+//MysqlCheckSignup mysql get all users
+func (u UserRepository) MysqlCheckSignup(MySQLDb *driver.MySQLDb, users []models.User) ([]models.User, error) {
+	err := MySQLDb.Find(&users).Error
 	return users, err
 }
 
-func (u UserRepository) MysqlInsertUser(MySqlDb *driver.MySqlDb, user models.User) error {
-	err := MySqlDb.MysqlInsertUser(user)
+//MysqlInsertUser mysql inert a ner user
+func (u UserRepository) MysqlInsertUser(MySQLDb *driver.MySQLDb, user models.User) error {
+	err := MySQLDb.Create(&user).Error
 	return err
 }
 
-func (u UserRepository) MysqlCheckLogin(MySqlDb *driver.MySqlDb, user models.User) (models.User, error) {
-	user, err := MySqlDb.MysqlReadUser(user, "email =?", user.Email)
+//MysqlCheckLogin mysql check log in
+func (u UserRepository) MysqlCheckLogin(MySQLDb *driver.MySQLDb, user models.User) (models.User, error) {
+	err := MySQLDb.Where("email=?", user.Email).First(&user).Error
 	return user, err
 }
 
-//mssql
-func (u UserRepository) MssqlCheckSignup(MsSqlDb *driver.MsSqlDb, users []models.User) ([]models.User, error) {
-	users, err := MsSqlDb.MssqlQueryAllUser(users)
+//MssqlCheckSignup mssql get all users
+func (u UserRepository) MssqlCheckSignup(MsSQLDb *driver.MsSQLDb, users []models.User) ([]models.User, error) {
+	err := MsSQLDb.Find(&users).Error
 	return users, err
 }
 
-func (u UserRepository) MssqlInsertUser(MsSqlDb *driver.MsSqlDb, user models.User) error {
-	err := MsSqlDb.MssqlInsertUser(user)
+//MssqlInsertUser mssql inert a ner user
+func (u UserRepository) MssqlInsertUser(MsSQLDb *driver.MsSQLDb, user models.User) error {
+	err := MsSQLDb.Create(&user).Error
 	return err
 }
 
-func (u UserRepository) MssqlCheckLogin(MsSqlDb *driver.MsSqlDb, user models.User) (models.User, error) {
-	user, err := MsSqlDb.MssqlReadUser(user, "email =?", user.Email)
+//MssqlCheckLogin mssql check log in
+func (u UserRepository) MssqlCheckLogin(MsSQLDb *driver.MsSQLDb, user models.User) (models.User, error) {
+	err := MsSQLDb.Where("email=?", user.Email).First(&user).Error
 	return user, err
 }

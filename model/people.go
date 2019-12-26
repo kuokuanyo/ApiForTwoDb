@@ -1,6 +1,6 @@
 package models
 
-//mysql peoples資料
+//People mysql 資料
 type People struct {
 	Key1            string `gorm:"column:key1" json:"key1"`
 	Key2            string `gorm:"column:key2" json:"key2"`

@@ -15,8 +15,10 @@ import (
 	models "ApiForTwoDb/model"
 )
 
+//Controller struct
 type Controller struct{}
 
+//Signup create a new account
 //@Summary create a new account
 //@Tags User
 //@Description 註冊
@@ -29,7 +31,7 @@ type Controller struct{}
 //@Failure 403 {object} models.Error "Forbidden"
 //@Failure 500 {object} models.Error "Internal Server Error"
 //@Router /signup/{sql} [post]
-func (c Controller) Signup(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb) http.HandlerFunc {
+func (c Controller) Signup(MySQLDb *driver.MySQLDb, MsSQLDb *driver.MsSQLDb) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
 			error    models.Error
@@ -71,7 +73,7 @@ func (c Controller) Signup(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb) htt
 		switch strings.ToLower(params["sql"]) {
 		case "mysql":
 			//檢查信箱是否已經被使用過
-			users, err := userRepo.MysqlCheckSignup(MySqlDb, users)
+			users, err := userRepo.MysqlCheckSignup(MySQLDb, users)
 			if err != nil {
 				error.Message = "Server(database) error!"
 				utils.SendError(w, http.StatusInternalServerError, error)
@@ -79,8 +81,8 @@ func (c Controller) Signup(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb) htt
 			}
 
 			//check
-			for _, user_db := range users {
-				if user.Email == user_db.Email {
+			for _, userdb := range users {
+				if user.Email == userdb.Email {
 					error.Message = "E-mail already taken!"
 					utils.SendError(w, http.StatusForbidden, error)
 					return
@@ -100,14 +102,14 @@ func (c Controller) Signup(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb) htt
 			user.Password = string(hash)
 
 			//insert the new user
-			if err = userRepo.MysqlInsertUser(MySqlDb, user); err != nil {
+			if err = userRepo.MysqlInsertUser(MySQLDb, user); err != nil {
 				error.Message = "Server(database) error!"
 				utils.SendError(w, http.StatusInternalServerError, error)
 				return
 			}
 		case "mssql":
 			//檢查信箱是否已經被使用過
-			users, err := userRepo.MssqlCheckSignup(MsSqlDb, users)
+			users, err := userRepo.MssqlCheckSignup(MsSQLDb, users)
 			if err != nil {
 				error.Message = "Server(database) error!"
 				utils.SendError(w, http.StatusInternalServerError, error)
@@ -115,8 +117,8 @@ func (c Controller) Signup(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb) htt
 			}
 
 			//check
-			for _, user_db := range users {
-				if user.Email == user_db.Email {
+			for _, userdb := range users {
+				if user.Email == userdb.Email {
 					error.Message = "E-mail already taken!"
 					utils.SendError(w, http.StatusForbidden, error)
 					return
@@ -136,7 +138,7 @@ func (c Controller) Signup(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb) htt
 			user.Password = string(hash)
 
 			//insert the new user
-			if err = userRepo.MssqlInsertUser(MsSqlDb, user); err != nil {
+			if err = userRepo.MssqlInsertUser(MsSQLDb, user); err != nil {
 				error.Message = "Server(database) error!"
 				utils.SendError(w, http.StatusInternalServerError, error)
 				return
@@ -149,6 +151,7 @@ func (c Controller) Signup(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb) htt
 	}
 }
 
+//Login user login
 //@Summary login
 //@Tags User
 //@Description 登入
@@ -156,12 +159,12 @@ func (c Controller) Signup(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb) htt
 //@Produce json
 //@Param sql path string true "資料庫引擎"
 //@Param information body models.user true "個人資料"
-//@Success 200 {object} models.user "Successfully"
+//@Success 200 {object} models.JWT "Successfully"
 //@Failure 400 {object} models.Error "Bad Request"
 //@Failure 401 {object} models.Error "Unauthorized"
 //@Failure 500 {object} models.Error "Internal Server Error"
 //@Router /login/{sql} [post]
-func (c Controller) Login(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb) http.HandlerFunc {
+func (c Controller) Login(MySQLDb *driver.MySQLDb, MsSQLDb *driver.MsSQLDb) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
 			hashedpassword string
@@ -206,34 +209,30 @@ func (c Controller) Login(MySqlDb *driver.MySqlDb, MsSqlDb *driver.MsSqlDb) http
 
 		switch strings.ToLower(params["sql"]) {
 		case "mysql":
-			user, err := userRepo.MysqlCheckLogin(MySqlDb, user)
+			user, err := userRepo.MysqlCheckLogin(MySQLDb, user)
 			if err != nil {
 				//找不到資料
 				if err.Error() == "record not found" {
 					error.Message = "The user does not exist!"
 					utils.SendError(w, http.StatusBadRequest, error)
-					return
 				} else {
 					error.Message = "Server(database) error!"
 					utils.SendError(w, http.StatusInternalServerError, error)
-					return
 				}
 			}
 			//database password
 			hashedpassword = user.Password
 
 		case "mssql":
-			user, err := userRepo.MssqlCheckLogin(MsSqlDb, user)
+			user, err := userRepo.MssqlCheckLogin(MsSQLDb, user)
 			if err != nil {
 				//找不到資料
 				if err.Error() == "record not found" {
 					error.Message = "The user does not exist!"
 					utils.SendError(w, http.StatusBadRequest, error)
-					return
 				} else {
 					error.Message = "Server(database) error!"
 					utils.SendError(w, http.StatusInternalServerError, error)
-					return
 				}
 			}
 			//database password
